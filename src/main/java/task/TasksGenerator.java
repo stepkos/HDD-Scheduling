@@ -3,6 +3,8 @@ package task;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TasksGenerator {
     private final int maxArrivalTime;
@@ -16,6 +18,14 @@ public class TasksGenerator {
     }
 
     public List<Task> generateList(int amount, long seed) {
+        Random rand = new Random(seed);
+        return IntStream.range(1, amount + 1).mapToObj(i ->
+            new Task(i, rand.nextInt(maxArrivalTime), rand.nextInt(maxTaskPosition),
+                rand.nextInt(100) < realTimePercent))
+            .collect(Collectors.toList());
+    }
+
+    public List<Task> generateListOld(int amount, long seed) {
         Random rand = new Random(seed);
         List<Task> taskList = new ArrayList<>();
 
