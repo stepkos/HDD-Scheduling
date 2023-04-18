@@ -1,3 +1,5 @@
+import algorithms.Algorithms;
+import statistics.Statistic;
 import task.TasksGenerator;
 
 import java.util.Random;
@@ -5,8 +7,15 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        TasksGenerator tasksGenerator = new TasksGenerator(100, 10, 10);
-        tasksGenerator.generateTaskList(10, 0).printAll();
+        int maxArrivalTime = 10000;
+        int maxHeadPosition = 100;
+        int realTimePercent = 10;
+        int amountOfTasks = 1000;
+
+        TasksGenerator tasksGenerator = new TasksGenerator(maxArrivalTime, maxHeadPosition, realTimePercent);
+
+        Statistic fifoStats = Algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
+        System.out.println(fifoStats);
 
     }
 }
