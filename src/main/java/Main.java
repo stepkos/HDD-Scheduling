@@ -16,8 +16,12 @@ public class Main {
 
         Statistic fifoStats = Algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
         Statistic ssftStats = Algorithms.SSTF(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
+        Statistic scanStats = Algorithms.SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
+        Statistic c_scanStats = Algorithms.C_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
         System.out.println(fifoStats);
         System.out.println(ssftStats);
+        System.out.println(scanStats);
+        System.out.println(c_scanStats);
 
     }
 }
