@@ -35,6 +35,8 @@ public class Algorithms {
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    if (stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                        stats.addToStarvedRealTimeTasks(1);
                     task.execute();
                     taskList.getList().remove(task);
                 });
@@ -61,6 +63,8 @@ public class Algorithms {
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == closestTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    if (stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                        stats.addToStarvedRealTimeTasks(1);
                     task.execute();
                     taskList.getList().remove(task);
                 });
@@ -86,6 +90,8 @@ public class Algorithms {
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == finalHeadPosition).toList();
                 if (!actualTasks.isEmpty()) {
                     actualTasks.forEach(task -> {
+                        if (stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                            stats.addToStarvedRealTimeTasks(1);
                         task.execute();
                         taskList.getList().remove(task);
                     });
@@ -127,6 +133,8 @@ public class Algorithms {
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == finalHeadPosition).toList();
                 if (!actualTasks.isEmpty()) {
                     actualTasks.forEach(task -> {
+                        if (stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                            stats.addToStarvedRealTimeTasks(1);
                         task.execute();
                         taskList.getList().remove(task);
                     });

@@ -11,7 +11,7 @@ public class Main {
         int maxHeadPosition = 1000;
         int realTimePercent = 10;
         int amountOfTasks = 10000;
-        int realTimeDeadline = 100;
+        int realTimeDeadline = 1000;
 
         TasksGenerator tasksGenerator = new TasksGenerator(maxArrivalTime, maxHeadPosition, realTimePercent);
         Algorithms algorithms = new Algorithms(maxHeadPosition, realTimeDeadline);
