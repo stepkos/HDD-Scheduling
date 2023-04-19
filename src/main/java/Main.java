@@ -15,7 +15,9 @@ public class Main {
         TasksGenerator tasksGenerator = new TasksGenerator(maxArrivalTime, maxHeadPosition, realTimePercent);
 
         Statistic fifoStats = Algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
+        Statistic ssftStats = Algorithms.SSTF(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
         System.out.println(fifoStats);
+        System.out.println(ssftStats);
 
     }
 }

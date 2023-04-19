@@ -21,15 +21,40 @@ public class Algorithms {
             if (actualList.isEmpty())
                 stats.addToBreakTime(1);
             else {
-                int distance = Math.abs(headPosition - actualList.get(0).getPosition());
+                Task actualTask = actualList.get(0);
+                int distance = actualTask.getDistance(headPosition);
                 stats.addToSeekTime(distance);
-                actualList.get(0).execute();
-                headPosition = actualList.get(0).getPosition();
-                taskList.getList().remove(actualList.get(0));
+                actualTask.execute();
+                headPosition = actualTask.getPosition();
+                taskList.getList().remove(actualTask);
             }
         }
 
         return stats;
     }
+
+    public static Statistic SSTF(TaskList taskList, int maxHeadPosition) {
+        Statistic stats = new Statistic("SSTF");
+        int listSize = taskList.getList().size();
+        int headPosition = new Random(listSize).nextInt(maxHeadPosition);
+
+        while (!taskList.isDone()) {
+            List<Task> actualList = taskList.getTasksToDoList(stats.getSeekTime() + stats.getBreakTime());
+            if (actualList.isEmpty())
+                stats.addToBreakTime(1);
+            else {
+                int finalHeadPosition = headPosition;
+                Task closestTask = actualList.stream().min(Comparator.comparingInt(task -> task.getDistance(finalHeadPosition))).get();
+                int distance = closestTask.getDistance(headPosition);
+                stats.addToSeekTime(distance);
+                closestTask.execute();
+                headPosition = closestTask.getPosition();
+                taskList.getList().remove(closestTask);
+            }
+        }
+
+        return stats;
+    }
+
 
 }

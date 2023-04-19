@@ -49,6 +49,10 @@ public class Task {
         return realTime;
     }
 
+    public int getDistance(int headPosition) {
+        return Math.abs(headPosition - position);
+    }
+
     @Override
     public String toString() {
         return "Task{" +
