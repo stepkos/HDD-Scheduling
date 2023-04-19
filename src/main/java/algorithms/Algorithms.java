@@ -10,9 +10,15 @@ import java.util.Random;
 
 public class Algorithms {
 
+    private final int maxHeadPosition;
+
+    public Algorithms(int maxHeadPosition) {
+        this.maxHeadPosition = maxHeadPosition;
+    }
+
     // TODO obsloz ze moze byc kilka zadan w jednym miejscu
 
-    public static Statistic FIFO(TaskList taskList, int maxHeadPosition) {
+    public Statistic FIFO(TaskList taskList) {
         Statistic stats = new Statistic("FIFO");
         int listSize = taskList.getList().size();
         int headPosition = new Random(listSize).nextInt(maxHeadPosition);
@@ -35,7 +41,7 @@ public class Algorithms {
         return stats;
     }
 
-    public static Statistic SSTF(TaskList taskList, int maxHeadPosition) {
+    public Statistic SSTF(TaskList taskList) {
         Statistic stats = new Statistic("SSTF");
         int listSize = taskList.getList().size();
         int headPosition = new Random(listSize).nextInt(maxHeadPosition);
@@ -58,7 +64,7 @@ public class Algorithms {
         return stats;
     }
 
-    public static Statistic SCAN(TaskList taskList, int maxHeadPosition) {
+    public Statistic SCAN(TaskList taskList) {
         Statistic stats = new Statistic("SCAN");
         int listSize = taskList.getList().size();
         int headPosition = new Random(listSize).nextInt(maxHeadPosition);
@@ -100,7 +106,7 @@ public class Algorithms {
 
         return stats;
     }
-    public static Statistic C_SCAN(TaskList taskList, int maxHeadPosition) {
+    public Statistic C_SCAN(TaskList taskList) {
         Statistic stats = new Statistic("C-SCAN");
         int listSize = taskList.getList().size();
         int headPosition = new Random(listSize).nextInt(maxHeadPosition);
@@ -130,6 +136,5 @@ public class Algorithms {
 
         return stats;
     }
-
 
 }

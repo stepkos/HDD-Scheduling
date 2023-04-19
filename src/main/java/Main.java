@@ -8,16 +8,18 @@ public class Main {
     public static void main(String[] args) {
 
         int maxArrivalTime = 10000;
-        int maxHeadPosition = 100;
+        int maxHeadPosition = 1000;
         int realTimePercent = 10;
-        int amountOfTasks = 1000;
+        int amountOfTasks = 10000;
 
         TasksGenerator tasksGenerator = new TasksGenerator(maxArrivalTime, maxHeadPosition, realTimePercent);
+        Algorithms algorithms = new Algorithms(maxHeadPosition);
 
-        Statistic fifoStats = Algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
-        Statistic ssftStats = Algorithms.SSTF(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
-        Statistic scanStats = Algorithms.SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
-        Statistic c_scanStats = Algorithms.C_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0), maxHeadPosition);
+        Statistic fifoStats = algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0));
+        Statistic ssftStats = algorithms.SSTF(tasksGenerator.generateTaskList(amountOfTasks, 0));
+        Statistic scanStats = algorithms.SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
+        Statistic c_scanStats = algorithms.C_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
+
         System.out.println(fifoStats);
         System.out.println(ssftStats);
         System.out.println(scanStats);
