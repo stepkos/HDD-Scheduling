@@ -11,12 +11,12 @@ import java.util.Random;
 public class Algorithms {
 
     private final int maxHeadPosition;
+    private final int realTimeDeadline;
 
-    public Algorithms(int maxHeadPosition) {
+    public Algorithms(int maxHeadPosition, int realTimeDeadline) {
         this.maxHeadPosition = maxHeadPosition;
+        this.realTimeDeadline = realTimeDeadline;
     }
-
-    // TODO obsloz ze moze byc kilka zadan w jednym miejscu
 
     public Statistic FIFO(TaskList taskList) {
         Statistic stats = new Statistic("FIFO");
@@ -30,11 +30,14 @@ public class Algorithms {
                 stats.addToBreakTime(1);
             else {
                 Task actualTask = actualList.get(0);
-                int distance = actualTask.getDistance(headPosition);
-                stats.addToSeekTime(distance);
-                actualTask.execute();
+                stats.addToSeekTime(actualTask.getDistance(headPosition));
                 headPosition = actualTask.getPosition();
-                taskList.getList().remove(actualTask);
+
+                List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
+                actualTasks.forEach(task -> {
+                    task.execute();
+                    taskList.getList().remove(task);
+                });
             }
         }
 
@@ -53,11 +56,14 @@ public class Algorithms {
             else {
                 int finalHeadPosition = headPosition;
                 Task closestTask = actualList.stream().min(Comparator.comparingInt(task -> task.getDistance(finalHeadPosition))).get();
-                int distance = closestTask.getDistance(headPosition);
-                stats.addToSeekTime(distance);
-                closestTask.execute();
+                stats.addToSeekTime(closestTask.getDistance(headPosition));
                 headPosition = closestTask.getPosition();
-                taskList.getList().remove(closestTask);
+
+                List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == closestTask.getPosition()).toList();
+                actualTasks.forEach(task -> {
+                    task.execute();
+                    taskList.getList().remove(task);
+                });
             }
         }
 
