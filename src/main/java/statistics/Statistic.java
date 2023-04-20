@@ -1,6 +1,6 @@
 package statistics;
 
-public final class Statistic {
+public class Statistic {
     private final String algorithmName;
     private int seekTime = 0;
     private int breakTime = 0;

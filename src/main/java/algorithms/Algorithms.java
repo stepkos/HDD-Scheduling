@@ -81,7 +81,6 @@ public class Algorithms {
                 }
                 // End of EDF Strategy
 
-
                 Task actualTask = actualList.get(0);
                 stats.addToSeekTime(actualTask.getDistance(headPosition));
                 headPosition = actualTask.getPosition();
