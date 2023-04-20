@@ -18,12 +18,14 @@ public class Main {
 
         Statistic fifoStats = algorithms.FIFO(tasksGenerator.generateTaskList(amountOfTasks, 0));
         Statistic fifoEdfStats = algorithms.FIFO_EDF(tasksGenerator.generateTaskList(amountOfTasks, 0));
+        Statistic fifoFdScanStats = algorithms.FIFO_FD_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
         Statistic ssftStats = algorithms.SSTF(tasksGenerator.generateTaskList(amountOfTasks, 0));
         Statistic scanStats = algorithms.SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
         Statistic c_scanStats = algorithms.C_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
 
         System.out.println(fifoStats);
         System.out.println(fifoEdfStats);
+        System.out.println(fifoFdScanStats);
         System.out.println(ssftStats);
         System.out.println(scanStats);
         System.out.println(c_scanStats);

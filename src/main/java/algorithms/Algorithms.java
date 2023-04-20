@@ -48,7 +48,7 @@ public class Algorithms {
     }
 
     public Statistic FIFO_EDF(TaskList taskList) {
-        Statistic stats = new Statistic("FIFO_EDF");
+        Statistic stats = new Statistic("FIFO EDF");
         int listSize = taskList.getList().size();
         int headPosition = new Random(listSize).nextInt(maxHeadPosition);
         taskList.sort(Comparator.comparingInt(Task::getArrivalTime));
@@ -78,6 +78,70 @@ public class Algorithms {
                     continue;
                 }
                 // End of EDF Strategy
+
+
+                Task actualTask = actualList.get(0);
+                stats.addToSeekTime(actualTask.getDistance(headPosition));
+                headPosition = actualTask.getPosition();
+
+                List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
+                actualTasks.forEach(task -> {
+                    if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                        stats.addToStarvedRealTimeTasks(1);
+                    task.execute();
+                    taskList.getList().remove(task);
+                });
+            }
+        }
+
+        return stats;
+    }
+
+    public Statistic FIFO_FD_SCAN(TaskList taskList) {
+        Statistic stats = new Statistic("FIFO FD-SCAN");
+        int listSize = taskList.getList().size();
+        int headPosition = new Random(listSize).nextInt(maxHeadPosition);
+        taskList.sort(Comparator.comparingInt(Task::getArrivalTime));
+
+        while (!taskList.isDone()) {
+            List<Task> actualList = taskList.getTasksToDoList(stats.getSeekTime() + stats.getBreakTime());
+            if (actualList.isEmpty())
+                stats.addToBreakTime(1);
+            else {
+
+                // EF-SCAN Strategy
+                int finalHeadPosition = headPosition;
+                Optional<Task> fdTaskOpt = actualList.stream()
+                        .filter(Task::isRealTime)
+                        .filter(task -> stats.getSeekTime() + stats.getBreakTime() > task.getDistance(finalHeadPosition) + realTimeDeadline)
+                        .min(Comparator.comparingInt(task -> task.getDistance(stats.getSeekTime() + stats.getBreakTime())));
+
+                if (fdTaskOpt.isPresent()) {
+                    Task fdTask = fdTaskOpt.get();
+                    stats.addToSeekTime(fdTask.getDistance(headPosition));
+
+                    while (headPosition != fdTask.getPosition()) {
+
+                        if (headPosition < fdTask.getPosition())
+                            headPosition++;
+                        else
+                            headPosition--;
+
+                        int finalHeadPosition1 = headPosition;
+                        List<Task> forTask = taskList.getTasksToDoList(stats.getSeekTime() + stats.getBreakTime()).stream()
+                                .filter(task -> task.getPosition() == finalHeadPosition1).toList();
+
+                        forTask.forEach(task -> {
+                            if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
+                                stats.addToStarvedRealTimeTasks(1);
+                            task.execute();
+                            taskList.getList().remove(task);
+                        });
+                    }
+
+                    continue;
+                }
+                // End of FD-SCAN Strategy
 
 
                 Task actualTask = actualList.get(0);
