@@ -5,6 +5,7 @@ public final class Statistic {
     private int seekTime = 0;
     private int breakTime = 0;
     private int starvedRealTimeTasks = 0;
+    private int maxWaitingTime = 0;
 
     public Statistic(String algorithmName) {
         this.algorithmName = algorithmName;
@@ -38,6 +39,10 @@ public final class Statistic {
         this.starvedRealTimeTasks = starvedRealTimeTasks;
     }
 
+    public int getMaxWaitingTime() {
+        return maxWaitingTime;
+    }
+
     public void addToSeekTime(int value) {
         seekTime += value;
     }
@@ -50,14 +55,18 @@ public final class Statistic {
         starvedRealTimeTasks += value;
     }
 
+    public void updateMaxWaitingTime(int value) {
+        if (value > maxWaitingTime)
+            maxWaitingTime = value;
+    }
+
     @Override
     public String toString() {
-        return "Statistic{" +
-                "algorithmName='" + algorithmName + '\'' +
-                ", seekTime=" + seekTime +
+        return String.format("%-12s ", algorithmName) +
+                ": seekTime=" + seekTime +
                 ", breakTime=" + breakTime +
                 ", starvedRealTimeTasks=" + starvedRealTimeTasks +
-                '}';
+                ", maxWaitingTime=" + maxWaitingTime;
     }
 
 }

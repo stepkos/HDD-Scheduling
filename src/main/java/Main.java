@@ -23,6 +23,9 @@ public class Main {
         Statistic scanStats = algorithms.SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
         Statistic c_scanStats = algorithms.C_SCAN(tasksGenerator.generateTaskList(amountOfTasks, 0));
 
+        System.out.printf("maxArrivalTime=%d, maxHeadPosition=%d, realTimePercent=%d, amountOfTasks=%d, realTimeDeadline=%d\n",
+                maxArrivalTime, maxHeadPosition, realTimePercent, amountOfTasks, realTimeDeadline);
+
         System.out.println(fifoStats);
         System.out.println(fifoEdfStats);
         System.out.println(fifoFdScanStats);

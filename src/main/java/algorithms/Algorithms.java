@@ -36,6 +36,7 @@ public class Algorithms {
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                     if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                         stats.addToStarvedRealTimeTasks(1);
                     task.execute();
@@ -70,6 +71,7 @@ public class Algorithms {
                     stats.addToSeekTime(edfTask.getDistance(headPosition));
                     headPosition = edfTask.getPosition();
 
+                    stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - edfTask.getArrivalTime());
                     if (stats.getSeekTime() + stats.getBreakTime() > edfTask.getArrivalTime() + realTimeDeadline)
                         stats.addToStarvedRealTimeTasks(1);
 
@@ -86,6 +88,7 @@ public class Algorithms {
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                     if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                         stats.addToStarvedRealTimeTasks(1);
                     task.execute();
@@ -132,6 +135,7 @@ public class Algorithms {
                                 .filter(task -> task.getPosition() == finalHeadPosition1).toList();
 
                         forTask.forEach(task -> {
+                            stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                             if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                                 stats.addToStarvedRealTimeTasks(1);
                             task.execute();
@@ -143,13 +147,13 @@ public class Algorithms {
                 }
                 // End of FD-SCAN Strategy
 
-
                 Task actualTask = actualList.get(0);
                 stats.addToSeekTime(actualTask.getDistance(headPosition));
                 headPosition = actualTask.getPosition();
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == actualTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                     if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                         stats.addToStarvedRealTimeTasks(1);
                     task.execute();
@@ -178,6 +182,7 @@ public class Algorithms {
 
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == closestTask.getPosition()).toList();
                 actualTasks.forEach(task -> {
+                    stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                     if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                         stats.addToStarvedRealTimeTasks(1);
                     task.execute();
@@ -205,6 +210,7 @@ public class Algorithms {
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == finalHeadPosition).toList();
                 if (!actualTasks.isEmpty()) {
                     actualTasks.forEach(task -> {
+                        stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                         if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                             stats.addToStarvedRealTimeTasks(1);
                         task.execute();
@@ -248,6 +254,7 @@ public class Algorithms {
                 List<Task> actualTasks = actualList.stream().filter(task -> task.getPosition() == finalHeadPosition).toList();
                 if (!actualTasks.isEmpty()) {
                     actualTasks.forEach(task -> {
+                        stats.updateMaxWaitingTime(stats.getSeekTime() + stats.getBreakTime() - task.getArrivalTime());
                         if (task.isRealTime() && stats.getSeekTime() + stats.getBreakTime() > task.getArrivalTime() + realTimeDeadline)
                             stats.addToStarvedRealTimeTasks(1);
                         task.execute();
